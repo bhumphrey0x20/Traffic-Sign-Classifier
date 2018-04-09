@@ -143,8 +143,9 @@ def LeNet(x):
     fc2 = tf.matmul(fc1, fc2_W) + fc2_b
     return fc2
 
-
 ```
+
+
 
 ### Train, Validate and Test the Model
 
@@ -157,75 +158,18 @@ Training was done using the following parameters:
 
 At Epoch 100, Training Accuracy = 98.2%, Valication Accuracy = 94.7%
 
-### Training and Validation Accuracy for Epochs 91-100
-
-    Training...
-    
-    EPOCH 91 ...
-    	Training Accuracy = 0.978
-    	Validation Accuracy = 0.942
-    
-    EPOCH 92 ...
-    	Training Accuracy = 0.979
-    	Validation Accuracy = 0.941
-    
-    EPOCH 93 ...
-    	Training Accuracy = 0.979
-    	Validation Accuracy = 0.941
-    
-    EPOCH 94 ...
-    	Training Accuracy = 0.980
-    	Validation Accuracy = 0.937
-    
-    EPOCH 95 ...
-    	Training Accuracy = 0.979
-    	Validation Accuracy = 0.941
-    
-    EPOCH 96 ...
-    	Training Accuracy = 0.977
-    	Validation Accuracy = 0.937
-    
-    EPOCH 97 ...
-    	Training Accuracy = 0.979
-    	Validation Accuracy = 0.937
-    
-    EPOCH 98 ...
-    	Training Accuracy = 0.980
-    	Validation Accuracy = 0.933
-    
-    EPOCH 99 ...
-    	Training Accuracy = 0.980
-    	Validation Accuracy = 0.939
-    
-    EPOCH 100 ...
-    	Training Accuracy = 0.980
-    	Validation Accuracy = 0.945
-    
-    Model saved
+Finally, the test data tested with an accuracy = 91.0%
 
 
-    ### Figure 3. Plot of Triaing and Validation Accuracies
-    
+### Figure 3. Plot of Triaing and Validation Accuracies
+
 ![png](output_22_1.png)
 
+~~~
 
 
-```python
-'''
-    evaluate test data for accuracy
-'''
-
-with tf.Session() as sess:
-    saver.restore(sess, tf.train.latest_checkpoint('.'))
-
-    test_accuracy = evaluate(X_test, y_test)
-    print("Test Accuracy = {:.3f}".format(test_accuracy))
-```
-
-    Test Accuracy = 0.910
 
 
----
 
 ## Step 3: Test a Model on New Images
 
