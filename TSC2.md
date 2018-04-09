@@ -5,55 +5,23 @@
 
 ## Project: Build a Traffic Sign Recognition Classifier
 
-In this notebook, a template is provided for you to implement your functionality in stages, which is required to successfully complete this project. If additional code is required that cannot be included in the notebook, be sure that the Python code is successfully imported and included in your submission if necessary. 
+The Goal of Project 2 was to build a convolutional neural network to classify German traffic signs. This project utilized data from provided by udacity as well as starter code included from: 
 
-> **Note**: Once you have completed all of the code implementations, you need to finalize your work by exporting the iPython Notebook as an HTML document. Before exporting the notebook to html, all of the code cells need to have been run so that reviewers can see the final implementation and output. You can then export the notebook by using the menu above and navigating to  \n",
-    "**File -> Download as -> HTML (.html)**. Include the finished document along with this notebook as your submission. 
-
-In addition to implementing code, there is a writeup to complete. The writeup should be completed in a separate file, which can be either a markdown file or a pdf document. There is a [write up template](https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project/blob/master/writeup_template.md) that can be used to guide the writing process. Completing the code template and writeup template will cover all of the [rubric points](https://review.udacity.com/#!/rubrics/481/view) for this project.
-
-The [rubric](https://review.udacity.com/#!/rubrics/481/view) contains "Stand Out Suggestions" for enhancing the project beyond the minimum requirements. The stand out suggestions are optional. If you decide to pursue the "stand out suggestions", you can include the code in this Ipython notebook and also discuss the results in the writeup file.
+    https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project
 
 
->**Note:** Code and Markdown cells can be executed using the **Shift + Enter** keyboard shortcut. In addition, Markdown cells can be edited by typically double-clicking the cell to enter edit mode.
+The data set included 34799 training example images, 4410 validation examples, and 12630 testing examples. All example images were preformated to a size of (32,32,3).
 
----
-## Step 0: Load The Data
+The figure below is sample of images for the training data.
 
-
-```python
-import numpy as np
-import cv2
-import matplotlib.pyplot as plt
-import tensorflow as tf
-import random
-import time
-```
+    Training Sample Images
 
 
-```python
-# Load pickled data
-import pickle
 
-# TODO: Fill this in based on where you saved the training and testing data
+![png](output_9_1.png)
 
-training_file = './traffic-signs-data/train.p'
-validation_file= './traffic-signs-data/valid.p'
-testing_file = './traffic-signs-data/test.p'
+>>>>
 
-with open(training_file, mode='rb') as f:
-    train = pickle.load(f)
-with open(validation_file, mode='rb') as f:
-    valid = pickle.load(f)
-with open(testing_file, mode='rb') as f:
-    test = pickle.load(f)
-    
-X_train, y_train = train['features'], train['labels']
-X_valid, y_valid = valid['features'], valid['labels']
-X_test, y_test = test['features'], test['labels']
-```
-
----
 
 ## Step 1: Dataset Summary & Exploration
 
