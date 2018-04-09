@@ -44,24 +44,25 @@ Previous preprossessing attempts included converting to HSV color space and usin
 The original architecture used the LeNet-5 Lab https://classroom.udacity.com/nanodegrees/nd013/parts/fbf77062-5703-404e-b60c-95b78b2f3f9e/modules/6df7ae49-c61c-4bb2-a23e-6527e69209ec/lessons/601ae704-1035-4287-8b11-e2c2716217ad/concepts/d4aca031-508f-4e0b-b493-e7b706120f81. Several hyperparameters and the activation function changed, however, the results were unsatisfactor and the model architecture was adjusted slightly. The following achitecture was used:
 
 
-Layer1:     Conv            
+Layer1:     Conv            kernel = 3x3, strides=1, output = (28,28, 6)
             Sigmoid
-            Max_Pool
+            Max_Pool        kernel = 3x3, strides =1, output = (26,26, 6)
 
-Layer2:     Conv
+Layer2:     Conv            kernel = 3x3, strides=2, output = (12,12,16)
             Sigmoid
-            Max_Pool
+            Max_Pool        kernel = 2x2, strides=1, output = (11,11, 16)
             
-Layer3:     Conv
+Layer3:     Conv            kernel = 4x4, strides=2, output = (4,4,25)    
             Sigmoid
-            Max_Pool
-            Dropout, keep_prob = 0.6
+            Dopout          keep_prob = 0.6
 
-Layer4:     Fully Connected
+Layer4:     Fully Connect   Flattened = 400
+            Matrix Multi    output = 120
             Sigmoid
-            Dropout, keep_prob = 0.8
+            Dropout         keep_prob = 0.8
 
-Layer5:     Fully Connected
+Layer5:     Fully Connect   
+            Matrix Multi    output = 43
 
 
 
