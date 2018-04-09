@@ -204,40 +204,8 @@ At Epoch 100, Training Accuracy = 98.2%, Valication Accuracy = 94.7%
     Model saved
 
 
-
-```python
-''' 
-    Print elapsed time for training, max Training Accuracy, and max Validation Accuracy
-    Plot Training and Validation Accuracy in graph
- 
-''' 
-
-import matplotlib.pyplot as plt
-%matplotlib inline
-plt.figure()
-#plt.subplot(1,2,1)
-plt.plot(range(EPOCHS), graph_x_train, 'b')
-plt.plot(range(EPOCHS),graph_x_valid, 'r')
-plt.legend(['Training Accuracy','Validation Accuracy'])
-
-plt.ylabel('% Accuracy')
-plt.xlabel('Epochs');
-
-
-# printing max Training and Valitation Accuracies
-print('Elapsed Time: {:.2f} min'.format((toc-tic)/60) )
-
-print('\nTrain Accuracy: %f at %i epochs' %(np.max(graph_x_train), np.argmax(graph_x_train)) )      
-print('Validation Accuracy: %f at %i epoch' %(np.max(graph_x_valid), np.argmax(graph_x_valid)) )
-```
-
-    Elapsed Time: 33.89 min
+    ### Figure 3. Plot of Triaing and Validation Accuracies
     
-    Train Accuracy: 0.980373 at 93 epochs
-    Validation Accuracy: 0.944898 at 99 epoch
-
-
-
 ![png](output_22_1.png)
 
 
