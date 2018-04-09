@@ -5,270 +5,41 @@
 
 ## Project: Build a Traffic Sign Recognition Classifier
 
-The Goal of Project 2 was to build a convolutional neural network to classify German traffic signs. This project utilized data from provided by udacity as well as starter code included from: 
+The Goal of Project 2 was to build a convolutional neural network, using python and tensorflow, to classify German traffic signs. This project utilized data obtainable from [German Traffic Sign Dataset](http://benchmark.ini.rub.de/?section=gtsrb&subsection=dataset), and provided by udacity as well as starter code included here: 
 
     https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project
 
 
 The data set included 34799 training example images, 4410 validation examples, and 12630 testing examples. All example images were preformated to a size of (32,32,3).
 
-The figure below is sample of images for the training data.
+The figure 1 below is sample of images for the training data. Figure 2 show the distribution of traffic sign types in the training data. 
 
-    Training Sample Images
-
-
-
-![png](output_9_1.png)
-
->>>>
-
-
-## Step 1: Dataset Summary & Exploration
-
-The pickled data is a dictionary with 4 key/value pairs:
-
-- `'features'` is a 4D array containing raw pixel data of the traffic sign images, (num examples, width, height, channels).
-- `'labels'` is a 1D array containing the label/class id of the traffic sign. The file `signnames.csv` contains id -> name mappings for each id.
-- `'sizes'` is a list containing tuples, (width, height) representing the original width and height the image.
-- `'coords'` is a list containing tuples, (x1, y1, x2, y2) representing coordinates of a bounding box around the sign in the image. **THESE COORDINATES ASSUME THE ORIGINAL IMAGE. THE PICKLED DATA CONTAINS RESIZED VERSIONS (32 by 32) OF THESE IMAGES**
-
-Complete the basic data summary below. Use python, numpy and/or pandas methods to calculate the data summary rather than hard coding the results. For example, the [pandas shape method](http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.shape.html) might be useful for calculating some of the summary results. 
-
-### Provide a Basic Summary of the Data Set Using Python, Numpy and/or Pandas
-
-
-```python
-### Replace each question mark with the appropriate value. 
-### Use python, pandas or numpy methods rather than hard coding the results
-
-EPOCHS = 100
-BATCH_SIZE = 128
-
-# TODO: Number of training examples
-n_train = len(X_train)
-
-# TODO: Number of validation examples
-n_validation = len(X_valid)
-
-# TODO: Number of testing examples.
-n_test = len(X_test)
-
-# TODO: What's the shape of a traffic sign image?
-image_shape = (32,32,3)
-
-# TODO: How many unique classes/labels there are in the dataset.
-n_classes = np.max(y_train)+1
-
-print("Number of training examples =", n_train)
-print("Number of testing examples =", n_test)
-print("Image data shape =", image_shape)
-print("Number of classes =", n_classes)
-```
-
-    Number of training examples = 34799
-    Number of testing examples = 12630
-    Image data shape = (32, 32, 3)
-    Number of classes = 43
-
-
-### Include an exploratory visualization of the dataset
-
-Visualize the German Traffic Signs Dataset using the pickled file(s). This is open ended, suggestions include: plotting traffic sign images, plotting the count of each sign, etc. 
-
-The [Matplotlib](http://matplotlib.org/) [examples](http://matplotlib.org/examples/index.html) and [gallery](http://matplotlib.org/gallery.html) pages are a great resource for doing visualizations in Python.
-
-**NOTE:** It's recommended you start with something simple first. If you wish to do more, come back to it after you've completed the rest of the sections. It can be interesting to look at the distribution of classes in the training, validation and test set. Is the distribution the same? Are there more examples of some classes than others?
-
-
-```python
-### Data exploration visualization code goes here.
-### Feel free to use as many code cells as needed.
-
-''' Most of code for visualization taken from the "Visualization' section of LeNet-Lab-Solution.ipynb, 
-    BH
-'''
-
-# Visualizations will be shown in the notebook.
-%matplotlib inline
-
-import csv
-s_name=[]
-plt.figure(figsize=(10,10))
-
-for i in range(1,10):
-    index1 = random.randint(0, len(X_train))
-    image1 = X_train[index1].squeeze()
-    with open('signnames.csv') as file:
-        reader = csv.reader(file, delimiter=',')
-        for row in reader:
-            if row[0] == str(y_train[index1]):
-                s_name = row[1]
- #           elif row[0] == str(y_train[index1]):   
- #               sign_name = row[1]
-    plt.subplot(3,3,i)
-    plt.imshow(image1)
-    plt.title(s_name)
-       
-
-#plt.figure()
-#plt.imshow(X_train[11])
-
-
-print("Training Sample Images")
-
-
-```
-
-    Training Sample Images
-
-
+##    Figure1. Training Sample Images
 
 ![png](output_9_1.png)
 
 
-
-```python
-'''
-    Plot distribution of road signs in training set
-'''
-sign_names=[]
-with open('signnames.csv') as file:
-    reader = csv.reader(file, delimiter=',')
-    for row in reader:
-        sign_names.append(row[1])
-
-hist = np.histogram(y_train, n_classes)
-hist = np.asarray(hist)
-y = np.arange(n_classes)
-#num = num+ len(hist[1])
-#hist = hist.reshape(1,len(hist[0])+len(hist[1]) )
-#print(hist[0])
-#print('len hist: %i' %(len(hist[0]) ))
-#print(np.sum(hist[0]))
-
-plt.figure(figsize=(10,20))
-plt.barh(y,hist[0], align='center')
-plt.yticks(y,sign_names[1:44])
-
-plt.xlabel('# of Road Signs')
-plt.title('Distribution of Road Sign Images in Training Set')
-print('Distribution of Road Sign Images')
-```
-
-    Distribution of Road Sign Images
-
-
+##     Figure 2. Distribution of Road Sign Images
 
 ![png](output_10_1.png)
 
 
-----
 
-## Step 2: Design and Test a Model Architecture
-
-Design and implement a deep learning model that learns to recognize traffic signs. Train and test your model on the [German Traffic Sign Dataset](http://benchmark.ini.rub.de/?section=gtsrb&subsection=dataset).
-
-The LeNet-5 implementation shown in the [classroom](https://classroom.udacity.com/nanodegrees/nd013/parts/fbf77062-5703-404e-b60c-95b78b2f3f9e/modules/6df7ae49-c61c-4bb2-a23e-6527e69209ec/lessons/601ae704-1035-4287-8b11-e2c2716217ad/concepts/d4aca031-508f-4e0b-b493-e7b706120f81) at the end of the CNN lesson is a solid starting point. You'll have to change the number of classes and possibly the preprocessing, but aside from that it's plug and play! 
-
-With the LeNet-5 solution from the lecture, you should expect a validation set accuracy of about 0.89. To meet specifications, the validation set accuracy will need to be at least 0.93. It is possible to get an even higher accuracy, but 0.93 is the minimum for a successful project submission. 
-
-There are various aspects to consider when thinking about this problem:
-
-- Neural network architecture (is the network over or underfitting?)
-- Play around preprocessing techniques (normalization, rgb to grayscale, etc)
-- Number of examples per label (some have more than others).
-- Generate fake data.
-
-Here is an example of a [published baseline model on this problem](http://yann.lecun.com/exdb/publis/pdf/sermanet-ijcnn-11.pdf). It's not required to be familiar with the approach used in the paper but, it's good practice to try to read papers like these.
-
-### Pre-process the Data Set (normalization, grayscale, etc.)
-
-Minimally, the image data should be normalized so that the data has mean zero and equal variance. For image data, `(pixel - 128)/ 128` is a quick way to approximately normalize the data and can be used in this project. 
-
-Other pre-processing steps are optional. You can try different techniques to see if it improves performance. 
-
-Use the code cell (or multiple code cells, if necessary) to implement the first step of your project.
+## Data Preprosseing
 
 
-```python
-### Preprocess the data here. It is required to normalize the data. Other preprocessing steps could include 
-### converting to grayscale, etc.
-### Feel free to use as many code cells as needed.
+## Design and Test a Model Architecture
 
-""" 
-Each image in the training, validation, and testing sets are converted to grayscale, brightened using
-histogram equalization, and smoothed with Gaussian low pass filter. Then the sets are normalized using 
-equation: 
-            (pixels -128)/128
-            
-"""
+Preprossessing of the data included:
+    1. Converting the images to grayscale, using openCV cvtColor() function
+    2. Histogram equalization to 'brighten' the overall image
+    3. Blurring the image using the openCV function GaussianBlur()
+    4. Normalizing the image by the function (pixel -128)/128
 
-# Training Set
-
-X_train_add_data = np.ndarray((n_train,32,32))
-y_train_add_data = []
-
-X_train_normal = np.ndarray((n_train, 32,32))
-
-idx=0
-
-for i in range(0,len(X_train)):
-    im = X_train[i]
-    im_gray = cv2.cvtColor(im, cv2.COLOR_RGB2GRAY)
-    im_gray = cv2.equalizeHist(im_gray)
-    im_gray = cv2.GaussianBlur(im_gray, (3,3), 0)
-    # every 4th image scew the image slightly 
-    X_train_normal[i]= im_gray
-
-X_train = (X_train_normal-128.)/128.    
-
-X_train = X_train.reshape(-1,32,32,1)
-
-print((X_train.shape))
-print('y_train.shape: %s' %(y_train.shape))
-print((X_train.dtype))
-
-#Validation Set
-
-X_valid_normal = np.ndarray((len(X_valid), 32,32))
-for i in range(0,len(X_valid)):
-    im = X_valid[i]
-    im_gray = cv2.cvtColor(im, cv2.COLOR_RGB2GRAY)
-    im_gray = cv2.equalizeHist(im_gray)
-    im_gray = cv2.GaussianBlur(im_gray, (3,3), 0)
-    
-    X_valid_normal[i] = (im_gray)
-
-X_valid_normal = (X_valid_normal -128.)/128.
-X_valid = X_valid_normal.reshape(-1,32,32,1)
-
-# Test Set
-
-X_test_normal = np.ndarray((len(X_test), 32,32))
-
-for i in range(0,len(X_test)):
-    im = X_test[i]
-    im_gray = cv2.cvtColor(im, cv2.COLOR_RGB2GRAY)
-    im_gray = cv2.equalizeHist(im_gray)
-    im_gray = cv2.GaussianBlur(im_gray, (3,3), 0)
-    
-    X_test_normal[i] = (im_gray)
-
-X_test_normal = (X_test_normal-128.)/128.
-    
-X_test = X_test_normal.reshape(-1,32,32,1)
+Previous preprossessing attempts included converting to HSV color space and using the H-channel, warping the images, rotating the images randomly from -45 deg to +45 deg, 'zooming' (taking random region of interests and increasing the size to 32x32 pixels), and normalizing with function (pixel *0.8/255) + 0.1. However, these either reduced the overall validation accuracy or had no affect. 
 
 
-#shuffling data as in proj LeNet Sign Classifier lab
-from sklearn.utils import shuffle
 
-X_train, y_train = shuffle(X_train, y_train)
-
-```
-
-    (34799, 32, 32, 1)
-    y_train.shape: 34799
-    float64
 
 
 ### Model Architecture
