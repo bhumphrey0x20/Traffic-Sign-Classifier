@@ -165,11 +165,38 @@ Finally, the test data tested with an accuracy = 91.0%
 
 ![png](output_22_1.png)
 
+
+
+
+## Testing New Images
+
+9 Images of German traffic signs were found on the web four of which were chosen because the training set contained a high distribution of images ( > 1750) in their category. These images were tested using the above model and the five highest probability images were viewed. 
+
+The accuracy of the sample images was low, 55%. The top five images were   
+    
+   ### Figure 4. Sample Images From the Web
+
+![png](output_26_1.png)
+
+
+Of the nine sample images only four were correctly classified, or had a matching label with the highest probability. These were 'Right of Way', (label = 11), 'Yield' (label = 13), 'No Passing' (label = 9), and 'Keep Right' (label = 38). Since only two of those correcly classified had high numbers in the training data, it appears that the number of images per label in the training data did not have an impact in correct classification in using this model. The model generated probablilites of five speed signs for the sample image 'Speed 50 kph' (label = 2)  
+
+
+Sample No	Labels of Top 5 Prob	Top 5 Probablity
+---------	---------------------	----------------
+11      	11 30 1 23 34			0.995088 0.00476277 4.89119e-05 3.8882e-05 1.66087e-05
+35		    3 5 7 2 18			    0.432789 0.279815 0.177555 0.0898853 0.00846187
+2		    8 7 2 5 1			    0.721362 0.270504 0.00672228 0.000683435 0.000379537
+28		    24 27 31 21 29			0.928501 0.064805 0.00160601 0.00130281 0.000851723
+40		    12 8 29 0 3			    0.789539 0.0774068 0.0503172 0.0417466 0.0109882
+13		    13 9 10 38 15			0.999941 5.85875e-05 2.75398e-07 7.69311e-08 2.41203e-08
+9		    9 12 3 7 35			    0.598603 0.329727 0.0334712 0.0229883 0.00696638
+10		    29 12 13 28 5			0.929725 0.0226146 0.0189356 0.0115063 0.0109912
+38		    38 10 13 5 2			0.778025 0.20454 0.01382 0.00303242 0.000336547
+
+
+
 ~~~
-
-
-
-
 
 ## Step 3: Test a Model on New Images
 
