@@ -14,21 +14,18 @@ The data set included 34799 training example images, 4410 validation examples, a
 
 The figure 1 below is sample of images for the training data. Figure 2 show the distribution of traffic sign types in the training data. 
 
-##    Figure1. Training Sample Images
+###   Figure1. Training Sample Images
 
 ![png](output_9_1.png)
 
 
-##     Figure 2. Distribution of Road Sign Images
+###     Figure 2. Distribution of Road Sign Images
 
 ![png](output_10_1.png)
 
 
 
-## Data Preprosseing
-
-
-## Design and Test a Model Architecture
+### Data Preprosseing
 
 Preprossessing of the data included:
     1. Converting the images to grayscale, using openCV cvtColor() function
@@ -43,6 +40,30 @@ Previous preprossessing attempts included converting to HSV color space and usin
 
 
 ### Model Architecture
+
+The original architecture used the LeNet-5 Lab https://classroom.udacity.com/nanodegrees/nd013/parts/fbf77062-5703-404e-b60c-95b78b2f3f9e/modules/6df7ae49-c61c-4bb2-a23e-6527e69209ec/lessons/601ae704-1035-4287-8b11-e2c2716217ad/concepts/d4aca031-508f-4e0b-b493-e7b706120f81. Several hyperparameters and the activation function changed, however, the results were unsatisfactor and the model architecture was adjusted slightly. The following achitecture was used:
+
+
+Layer1:     Conv            
+            Sigmoid
+            Max_Pool
+
+Layer2:     Conv
+            Sigmoid
+            Max_Pool
+            
+Layer3:     Conv
+            Sigmoid
+            Max_Pool
+            Dropout, keep_prob = 0.6
+
+Layer4:     Fully Connected
+            Sigmoid
+            Dropout, keep_prob = 0.8
+
+Layer5:     Fully Connected
+
+
 
 
 ```python
