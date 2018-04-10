@@ -5,14 +5,14 @@
 
 ## Project: Build a Traffic Sign Recognition Classifier
 
-The Goal of Project 2 was to build a convolutional neural network, using python and tensorflow, to classify German traffic signs. This project utilized data obtainable from [German Traffic Sign Dataset](http://benchmark.ini.rub.de/?section=gtsrb&subsection=dataset), and provided by udacity as well as starter code included here: 
+The goal of Project 2 was to build a convolutional neural network, using python and tensorflow, to classify German traffic signs. This project utilized data from [German Traffic Sign Dataset](http://benchmark.ini.rub.de/?section=gtsrb&subsection=dataset), provided by udacity in addition to starter code included here: 
 
     https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project
 
 
-The data set included 34799 training example images, 4410 validation examples, and 12630 testing examples. All example images were preformated to a size of (32,32,3).
+The data set included 34799 training images, 4410 validation images, and 12630 testing images. All example images were preformated to a size of (32,32,3).
 
-The figure 1 below is sample of images for the training data. Figure 2 show the distribution of traffic sign types in the training data. 
+Figure 1 shows a sample of images for the training data. Figure 2 shows the distribution of traffic sign by label/type in the training data. 
 
 ###   Figure1. Training Sample Images
 
@@ -28,20 +28,16 @@ The figure 1 below is sample of images for the training data. Figure 2 show the 
 ### Data Preprosseing
 
 Preprossessing of the data included:
-    1. Converting the images to grayscale, using openCV cvtColor() function
-    2. Histogram equalization to 'brighten' the overall image
-    3. Blurring the image using the openCV function GaussianBlur()
-    4. Normalizing the image by the function (pixel -128)/128
+    1. converting the images to grayscale,
+    2. using histogram equalization to 'brighten' the overall image
+    3. smoothing the image, using Gaussian blur, and
+    4. normalizing the image by the function (pixel -128)/128
 
-Previous preprossessing attempts included converting to HSV color space and using the H-channel, warping the images, rotating the images randomly from -45 deg to +45 deg, 'zooming' (taking random region of interests and increasing the size to 32x32 pixels), and normalizing with function (pixel *0.8/255) + 0.1. However, these either reduced the overall validation accuracy or had no affect. 
-
-
-
-
+Previous preprossessing attempts included converting to HSV color space and using the H-channel, warping the images, rotating the images randomly from -45 deg to +45 deg, "zooming" (taking random regions of interest and increasing the size to 32x32 pixels), and normalizing using the function (pixel *0.8/255) + 0.1. However, these either reduced the overall validation accuracy or had no affect, so they were not used here. 
 
 ### Model Architecture
 
-The original architecture used the LeNet-5 Lab https://classroom.udacity.com/nanodegrees/nd013/parts/fbf77062-5703-404e-b60c-95b78b2f3f9e/modules/6df7ae49-c61c-4bb2-a23e-6527e69209ec/lessons/601ae704-1035-4287-8b11-e2c2716217ad/concepts/d4aca031-508f-4e0b-b493-e7b706120f81. Several hyperparameters and the activation function changed, however, the results were unsatisfactor and the model architecture was adjusted slightly. The following achitecture was used:
+The original architecture used the architecture from the LeNet-5 Lab https://classroom.udacity.com/nanodegrees/nd013/parts/fbf77062-5703-404e-b60c-95b78b2f3f9e/modules/6df7ae49-c61c-4bb2-a23e-6527e69209ec/lessons/601ae704-1035-4287-8b11-e2c2716217ad/concepts/d4aca031-508f-4e0b-b493-e7b706120f81. Several hyperparameters were changed and the activation function was changed, however, the results were unsatisfactory. Therefore the model architecture was adjusted slightly. The following achitecture was used:
 
 
 Layer1:     Conv            kernel = 3x3, strides=1, output = (28,28, 6)
@@ -57,12 +53,12 @@ Layer3:     Conv            kernel = 4x4, strides=2, output = (4,4,25)
             Dopout          keep_prob = 0.6
 
 Layer4:     Fully Connect   Flattened = 400
-            Matrix Multi    output = 120
+            Matrix Multiply output = 120
             Sigmoid
             Dropout         keep_prob = 0.8
 
 Layer5:     Fully Connect   
-            Matrix Multi    output = 43
+            Matrix Multiply output = 43
 
 
 ```python
@@ -144,21 +140,18 @@ def LeNet(x):
     return fc2
 
 ```
-
-
-
-### Train, Validate and Test the Model
+### Training, Validationg, and Testing the Model
 
 Training was done using the following parameters:
     Epochs = 100
     Batch Size = 128
     Learning Rate = 0.0008
-    keep_prob = 0.5 (dropout Layer 3)
-                0.8 (dropout Layer 4)
+    keep_prob = 0.5 (dropout, in Layer 3)
+                0.8 (dropout, in Layer 4)
 
-At Epoch 100, Training Accuracy = 98.2%, Valication Accuracy = 94.7%
+At Epoch 100 the training accuracy = 98.2% and the validation accuracy = 94.7%. 
 
-Finally, the test data tested with an accuracy = 91.0%
+Finally, the test data tested had an accuracy = 91.0%
 
 
 ### Figure 3. Plot of Triaing and Validation Accuracies
@@ -166,23 +159,16 @@ Finally, the test data tested with an accuracy = 91.0%
 ![png](output_22_1.png)
 
 
-
-
 ## Testing New Images
 
-9 Images of German traffic signs were found on the web four of which were chosen because the training set contained a high distribution of images ( > 1750) in their category. These images were tested using the above model and the five highest probability images were viewed. 
+Nine images of German traffic signs were found on the web, four of which were chosen because the training set contained a high distribution of images ( > 1750) in their category. These images were tested using the above model. The accuracy of the sample images was low, 55%. The top five predicted labels, for each input sample image, and their respective probabilities are shown below. 
 
-The accuracy of the sample images was low, 55%. The top five images were   
-    
    ### Figure 4. Sample Images From the Web
 
 ![png](output_26_1.png)
 
 
-Of the nine sample images only four were correctly classified, or had a matching label with the highest probability. These were 'Right of Way', (label = 11), 'Yield' (label = 13), 'No Passing' (label = 9), and 'Keep Right' (label = 38). Since only two of those correcly classified had high numbers in the training data, it appears that the number of images per label in the training data did not have an impact in correct classification in using this model. The model generated probablilites of five speed signs for the sample image 'Speed 50 kph' (label = 2)  
-
-
-Sample No	Labels of Top 5 Prob	Top 5 Probablity
+Label No	Labels of Top 5 Prob	Top 5 Probablity
 ---------	---------------------	----------------
 11      	11 30 1 23 34			0.995088 0.00476277 4.89119e-05 3.8882e-05 1.66087e-05
 35		    3 5 7 2 18			    0.432789 0.279815 0.177555 0.0898853 0.00846187
@@ -194,6 +180,10 @@ Sample No	Labels of Top 5 Prob	Top 5 Probablity
 10		    29 12 13 28 5			0.929725 0.0226146 0.0189356 0.0115063 0.0109912
 38		    38 10 13 5 2			0.778025 0.20454 0.01382 0.00303242 0.000336547
 
+
+Of the nine sample images only four were correctly classified: had a matching label with the highest probability. These were 'Right of Way', (label = 11), 'Yield' (label = 13), 'No Passing' (label = 9), and 'Keep Right' (label = 38). Since only two of those correcly classified had high numbers in the training data, it appears that the number of images per label in the training data did not have an impact in correct classification in using this model.  
+
+For the input sample 'Speed 50 kph' (label = 2), the model classified this image as being a speed sign, with all top five classification being spped signs. This is likely due to the general shape and overall color of the signs: round and white with red circle on the edges, but only listed label 2 as it's third highest probability, at less than 1%.
 
 
 ~~~
